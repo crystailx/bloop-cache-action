@@ -2,7 +2,7 @@
   "name": "typescript-action",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "TypeScript template action 2",
   "main": "lib/main.js",
   "scripts": {
     "build": "ncc build src/restore.ts --source-map --minify --out dist/restore && ncc build src/save.ts --source-map --minify --out dist/save",
