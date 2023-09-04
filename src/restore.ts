@@ -208,6 +208,8 @@ async function restoreCoursierCache(
   } else {
     paths = [getCachePath(getOs(await uname()))]
   }
+  const extraPaths = readExtraPaths('extraPaths')
+  paths = paths.concat(extraPaths)
 
   await restoreCache(
     'coursier',
@@ -229,9 +231,12 @@ async function restoreSbtCache(
   matrixHashedContent: string,
   extraHashedContent: string
 ): Promise<void> {
+  const extraSbtPaths = readExtraPaths('extraSbtPaths')
+  const paths: string[] = ['~/.sbt', '~/.ivy2/cache'].concat(extraSbtPaths)
+
   await restoreCache(
     'sbt-ivy2-cache',
-    ['~/.sbt', '~/.ivy2/cache'],
+    paths,
     inputFiles,
     job,
     extraSharedKey,
@@ -249,9 +254,12 @@ async function restoreMillCache(
   matrixHashedContent: string,
   extraHashedContent: string
 ): Promise<void> {
+  const extraMillPaths = readExtraPaths('extraMillPaths')
+  const paths: string[] = ['~/.cache/mill'].concat(extraMillPaths)
+
   await restoreCache(
     'mill',
-    ['~/.cache/mill'],
+    paths,
     inputFiles,
     job,
     extraSharedKey,
@@ -269,9 +277,12 @@ async function restoreAmmoniteCache(
   matrixHashedContent: string,
   extraHashedContent: string
 ): Promise<void> {
+  const extraAmmonitePaths = readExtraPaths('extraAmmonitePaths')
+  const paths: string[] = ['~/.ammonite'].concat(extraAmmonitePaths)
+
   await restoreCache(
     'ammonite',
-    ['~/.ammonite'],
+    paths,
     inputFiles,
     job,
     extraSharedKey,
@@ -292,6 +303,19 @@ function readExtraFiles(variableName: string): string[] {
     }
   }
   return extraFiles
+}
+
+function readExtraPaths(variableName: string): string[] {
+  const extraPathsStr = core.getInput(variableName)
+  let extraPaths: string[] = []
+  if (extraPathsStr) {
+    if (extraPathsStr.startsWith('[')) {
+      extraPaths = JSON.parse(extraPathsStr) as string[]
+    } else {
+      extraPaths = [extraPathsStr]
+    }
+  }
+  return extraPaths
 }
 
 function readExtraKeys(variableName: string): string {

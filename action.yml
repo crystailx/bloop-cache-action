@@ -61,6 +61,11 @@ inputs:
       See extraFiles for more details.
       The content of extraHashedContent is taken into account in the hash for the coursier cache key.
     default: ''
+  extraPaths:
+    required: false
+    description: >
+      Extra content to store into the cache.
+    default: ''
   extraSbtFiles:
     required: false
     description: >
@@ -76,6 +81,11 @@ inputs:
     required: false
     description: >
       Extra content to take into account in the sbt cache key. Same format as extraHashedContent.
+    default: ''
+  extraSbtPaths:
+    required: false
+    description: >
+      Extra content to store into the cache.
     default: ''
   extraMillFiles:
     required: false
@@ -93,6 +103,11 @@ inputs:
     description: >
       Extra content to take into account in the mill cache key. Same format as extraHashedContent.
     default: ''
+  extraMillPaths:
+    required: false
+    description: >
+      Extra content to store into the cache.
+    default: ''
   ammoniteScripts:
     required: false
     description: >
@@ -108,6 +123,11 @@ inputs:
     required: false
     description: >
       Extra content to take into account in the Ammonite cache key. Same format as extraHashedContent.
+    default: ''
+  extraAmmonitePaths:
+    required: false
+    description: >
+      Extra content to store into the cache.
     default: ''
 outputs:
   cache-hit-coursier:
